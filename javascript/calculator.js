@@ -7,11 +7,32 @@ var cur_val = null;
 
 const screen = document.querySelector(".screen");
 /*const print_hist = document.querySelector(".print-history");*/
-const print_hist = document.querySelector(".history");
+const print_hist = document.querySelector(".print-history");
 var hist = new Array();
 
 document.querySelector(".calc-buttons").addEventListener("click", function(event){
     buttonclick(event.target.innerText);
+});
+
+document.querySelector(".body").addEventListener("keydown",function(event){
+    var value = event.key;
+    //console.log(event.key);
+    
+    if(value === "Enter"){
+        value = "=";
+    }
+    else if(value === "Backspace"){
+        value = "←";
+    }
+    else if(value === "*"){
+        value = "×";
+    }
+    else if(value === "/"){
+        value = "÷";
+    }
+    console.log(event.key);
+    buttonclick(value);
+    
 });
 
 function buttonclick(value){
@@ -34,7 +55,7 @@ function handlenumber(value){
         buffer = value;
     }
     else{
-        if(buffer.length<10){
+        if(buffer.length<8){
             buffer += value;
         }
     }
@@ -55,7 +76,6 @@ function handlesymbol(value){
             if(prev_val && prev_op && cur_val){
                 hist.push(`${prev_val} ${prev_op} ${cur_val} = ${runningtotal}`);
                 rerender1();
-                console.log(hist.length);
             }
             previousoperator = null;
             buffer = "" + runningtotal;
@@ -101,13 +121,7 @@ function flashoperation(value){
         runningtotal *= value;
     }
     else{
-        if(value === 0){
-            alert("err!! Cannot divide by 0.");
-            return;
-        }
-        else{
-            runningtotal /= value;
-        }
+        runningtotal = (runningtotal / value).toFixed(6);
     }
 }
 
@@ -123,10 +137,13 @@ function rerender1(){
         console.log(hist[i]);
         print_hist.innerText += hist[i];
         print_hist.innerText += "\n";
-        
-        /*print_hist.appendChild("<div>asif</div>");*/
         console.log(print_hist);
         i--;
         count++;
     }
 }
+
+document.querySelector(".clear-btn").addEventListener("click",function(){
+    print_hist.innerText = "";
+    hist = [];
+});
