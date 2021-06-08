@@ -6,7 +6,7 @@ body {
   display: flex;
   align-content: stretch;
   padding: 0px;
-  margin: 30px 300px 30px 300px;
+  margin: 0px;
 }
 
 .calc {
@@ -97,8 +97,8 @@ body {
   cursor: pointer;
   text-align: center;
   position: absolute;
-  top: 550px;
-  right: 457px;
+  top: 545px;
+  right: 770px;
 }
 
 .clear-btn:hover {
